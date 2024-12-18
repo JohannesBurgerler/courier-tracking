@@ -1,0 +1,170 @@
+{
+  "info": {
+    "name": "Courier Tracking API Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Courier 1 Tracking",
+      "item": [
+        {
+          "name": "1. Initial Store Entry - Courier 1",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8080/api/v1/couriers/courier/location",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"courierId\": 1, \"latitude\": 40.9923307, \"longitude\": 29.1244229, \"time\": \"2024-12-18T10:30:00\"}"
+            }
+          }
+        },
+        {
+          "name": "2. Quick Reentry - Courier 1 (Should Fail)",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8080/api/v1/couriers/courier/location",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"courierId\": 1, \"latitude\": 40.9923307, \"longitude\": 29.1244229, \"time\": \"2024-12-18T10:30:30\"}"
+            }
+          }
+        },
+        {
+          "name": "3. Check Store Entries - Courier 1",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/v1/couriers/courier/1/storeentries"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Courier 2 Tracking",
+      "item": [
+        {
+          "name": "1. Store Entry - Courier 2 (Different Store)",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8080/api/v1/couriers/courier/location",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"courierId\": 2, \"latitude\": 40.986106, \"longitude\": 29.1161293, \"time\": \"2024-12-18T10:35:00\"}"
+            }
+          }
+        },
+        {
+          "name": "2. Move to Another Store - Courier 2",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8080/api/v1/couriers/courier/location",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"courierId\": 2, \"latitude\": 41.0066851, \"longitude\": 28.6552262, \"time\": \"2024-12-18T11:00:00\"}"
+            }
+          }
+        },
+        {
+          "name": "3. Check Store Entries - Courier 2",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/v1/couriers/courier/2/storeentries"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Courier 3 Store Reentry After Expiry",
+      "item": [
+        {
+          "name": "1. First Visit to Ataşehir Store",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8080/api/v1/couriers/courier/location",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"courierId\": 3, \"latitude\": 40.9923307, \"longitude\": 29.1244229, \"time\": \"2024-12-18T10:30:00\"}"
+            }
+          }
+        },
+        {
+          "name": "2. Visit to Novada Store",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8080/api/v1/couriers/courier/location",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"courierId\": 3, \"latitude\": 40.986106, \"longitude\": 29.1161293, \"time\": \"2024-12-18T10:45:00\"}"
+            }
+          }
+        },
+        {
+          "name": "3. Return to Ataşehir Store After Expiry",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8080/api/v1/couriers/courier/location",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"courierId\": 3, \"latitude\": 40.9923307, \"longitude\": 29.1244229, \"time\": \"2024-12-18T11:00:00\"}"
+            }
+          }
+        },
+        {
+          "name": "4. Check Store Entries - Courier 3",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/v1/couriers/courier/3/storeentries"
+          }
+        },
+        {
+          "name": "5. Check Total Distance - Courier 3",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/v1/couriers/courier/3/totaldistance"
+          }
+        }
+      ]
+    }
+  ]
+}
